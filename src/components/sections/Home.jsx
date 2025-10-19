@@ -1,4 +1,6 @@
+
 import { RevealOnScroll } from "../RevealOnScroll";
+import photo from "../../assets/photo.jpg";
 
 export const Home = () => {
   return (
@@ -11,9 +13,9 @@ export const Home = () => {
             {/* --- Left: Profile Image --- */}
             <div className="md:w-1/3 flex justify-center md:justify-end mb-10 md:mb-0">
                 <img
-                src="photo.jpg"
-                alt="Glory Lion"
-                className="w-52 h-52 md:w-64 md:h-64 object-cover rounded-full shadow-lg border-4 border-amber-900/50"
+                    src={photo}
+                    alt="Glory Lion"
+                    className="w-52 h-52 md:w-64 md:h-64 object-cover rounded-full shadow-lg border-4 border-amber-900/50"
                 />
             </div>
 
