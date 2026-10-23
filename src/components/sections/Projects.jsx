@@ -33,14 +33,15 @@ const ProjectLinks = ({ project }) => (
 // CI/CD flow drawn as connected stages, so the delivery work reads at a glance
 const Pipeline = ({ steps, targets }) => (
     <div className="mb-5 max-w-2xl">
-        <ol className="flex flex-wrap items-center gap-y-2 font-mono text-xs">
+        <ol className="flex flex-col sm:flex-row items-start sm:items-center font-mono text-xs">
             {steps.map((step, i) => (
-                <li key={step} className="flex items-center">
+                <li key={step} className="flex flex-col sm:flex-row items-start sm:items-center">
                     <span className="flex items-center gap-1.5 py-1.5 px-3 rounded-full border border-accent/50 bg-accent/10 text-accent-ink">
                         <span className="w-1.5 h-1.5 rounded-full bg-accent" />
                         {step}
                     </span>
-                    {i < steps.length - 1 && <span aria-hidden className="w-5 h-px bg-accent/60 mx-1" />}
+                    {/* vertical connector when stacked on phones, horizontal once the stages fit in one row */}
+                    {i < steps.length - 1 && <span aria-hidden className="w-px h-3 ml-4 sm:w-5 sm:h-px sm:mx-1 bg-accent/60" />}
                 </li>
             ))}
         </ol>
