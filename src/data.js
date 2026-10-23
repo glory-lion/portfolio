@@ -174,11 +174,45 @@ export const certifications = [
   },
 ];
 
+// Each area links to where the skill was actually used
 export const skills = [
-  { group: "Languages", items: ["Python", "Java", "TypeScript", "JavaScript", "Go", "PHP", "SQL", "C++"] },
-  { group: "Frameworks", items: ["React", "Next.js", "Laravel", "FastAPI", "Node.js", "Tailwind CSS"] },
-  { group: "Cloud & DevOps", items: ["GitHub Actions", "AWS", "Vercel", "PostgreSQL", "Supabase", "Git"] },
+  {
+    area: "Full-stack web",
+    tools: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Laravel", "Bootstrap"],
+    usedIn: [
+      { label: "HDI recruitment platform", href: "#about" },
+      { label: "TopicNest", href: "#project-topicnest" },
+      { label: "Module Quest", href: "#project-module-quest" },
+    ],
+  },
+  {
+    area: "Backend & data",
+    tools: ["Go", "PHP", "Python", "FastAPI", "PostgreSQL", "Supabase", "Firebase"],
+    usedIn: [
+      { label: "TopicNest API", href: "#project-topicnest" },
+      { label: "UniVerse", href: "#project-universe" },
+      { label: "Mosaic", href: "#project-mosaic" },
+    ],
+  },
+  {
+    area: "AI & computer vision",
+    tools: ["CLIP ViT-L/14", "MLP fine-tuning", "MediaPipe Hands"],
+    usedIn: [
+      { label: "Mosaic", href: "#project-mosaic" },
+      { label: "UniVerse gesture mode", href: "#project-universe" },
+    ],
+  },
+  {
+    area: "DevOps & cloud",
+    tools: ["GitHub Actions", "Vercel", "Railway", "AWS", "Git"],
+    usedIn: [
+      { label: "PPIS pipelines", href: "#project-ppis-cicd" },
+      { label: "AWS Cloud Practitioner", href: "#about" },
+    ],
+  },
 ];
+
+export const otherLanguages = ["Java", "C++", "SQL", "JavaScript", "MATLAB"];
 
 export const projects = [
   {

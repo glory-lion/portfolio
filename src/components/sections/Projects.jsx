@@ -82,7 +82,7 @@ export const Projects = () => {
                 <SectionHeading eyebrow="03 — Work" title="Featured projects" />
 
                 {projects.map((project, i) => (
-                    <ContainerScroll key={project.id} header={<ShowcaseHeader project={project} index={i} total={projects.length} />}>
+                    <ContainerScroll key={project.id} id={`project-${project.id}`} header={<ShowcaseHeader project={project} index={i} total={projects.length} />}>
                         <motion.img
                             src={project.image}
                             alt={`${project.title} screenshot`}

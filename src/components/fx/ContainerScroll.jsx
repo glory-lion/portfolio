@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 
 // Adapted from Aceternity UI's Container Scroll Animation: the screen starts
 // steeply tilted back and flattens into view as it scrolls to the centre.
-export const ContainerScroll = ({ header, children }) => {
+export const ContainerScroll = ({ id, header, children }) => {
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "center center"] });
 
@@ -14,7 +14,7 @@ export const ContainerScroll = ({ header, children }) => {
     const glow = useTransform(scrollYProgress, [0.5, 1], [0, 0.5]);
 
     return (
-        <div ref={ref} className="relative py-10 md:py-16" style={{ perspective: "1200px" }}>
+        <div ref={ref} id={id} className="relative py-10 md:py-16 scroll-mt-16" style={{ perspective: "1200px" }}>
             <motion.div style={{ y: headerY, opacity: headerOpacity }} className="max-w-5xl mx-auto mb-10">
                 {header}
             </motion.div>
