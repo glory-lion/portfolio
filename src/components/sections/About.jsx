@@ -49,7 +49,18 @@ const Timeline = ({ items }) => (
     </ol>
 );
 
-// Role leads, organisation second — what was done matters more than where
+const Tags = ({ items, className = "" }) => (
+    <div className={`flex flex-wrap gap-2 ${className}`}>
+        {items.map((t) => (
+            <span key={t} className="font-mono text-xs bg-surface-2 text-ink py-1 px-3 rounded-full">
+                {t}
+            </span>
+        ))}
+    </div>
+);
+
+// Role leads, organisation second — what was done matters more than where.
+// Featured roles sit in a tinted card so the strongest experience reads first.
 const RoleTimeline = ({ items, offset = 0 }) => (
     <ol className="relative border-l-2 border-line ml-3 space-y-10">
         {items.map((item, i) => (
@@ -61,31 +72,48 @@ const RoleTimeline = ({ items, offset = 0 }) => (
                 className="relative pl-8 group"
             >
                 <Dot />
-                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                    <h4 className="font-serif text-xl font-semibold text-ink group-hover:text-accent-ink transition-colors">
-                        {item.role}
-                    </h4>
-                    {item.period && <span className="font-mono text-xs text-muted">{item.period}</span>}
-                </div>
-                <p className="text-sm font-medium text-accent-ink mt-1">
-                    {item.href ? (
-                        <a href={item.href} target="_blank" rel="noreferrer" className="underline decoration-accent/40 underline-offset-4 hover:decoration-accent">
-                            {item.org} ↗
-                        </a>
-                    ) : (
-                        item.org
+                <div
+                    className={
+                        item.featured
+                            ? "-mt-3 rounded-2xl border border-accent/40 bg-accent/[0.06] p-5 md:p-6"
+                            : ""
+                    }
+                >
+                    {item.featured && (
+                        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent-ink mb-2">★ Highlight</p>
                     )}
-                </p>
-                {item.highlights && (
-                    <div className="flex flex-wrap gap-2 mt-3">
-                        {item.highlights.map((h) => (
-                            <span key={h} className="font-mono text-xs bg-accent/15 text-accent-ink py-1 px-3 rounded-full">
-                                {h}
-                            </span>
-                        ))}
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                        <h4
+                            className={`font-serif font-semibold text-ink group-hover:text-accent-ink transition-colors ${
+                                item.featured ? "text-2xl" : "text-xl"
+                            }`}
+                        >
+                            {item.role}
+                        </h4>
+                        {item.period && <span className="font-mono text-xs text-muted">{item.period}</span>}
                     </div>
-                )}
-                <Points points={item.points} />
+                    <p className="text-sm font-medium text-accent-ink mt-1">
+                        {item.href ? (
+                            <a href={item.href} target="_blank" rel="noreferrer" className="underline decoration-accent/40 underline-offset-4 hover:decoration-accent">
+                                {item.org} ↗
+                            </a>
+                        ) : (
+                            item.org
+                        )}
+                    </p>
+                    {item.summary && <p className="text-ink mt-3 leading-relaxed">{item.summary}</p>}
+                    {item.highlights && (
+                        <div className="flex flex-wrap gap-2 mt-3">
+                            {item.highlights.map((h) => (
+                                <span key={h} className="font-mono text-xs bg-accent/15 text-accent-ink py-1 px-3 rounded-full">
+                                    {h}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+                    <Points points={item.points} />
+                    {item.tech && <Tags items={item.tech} className="mt-4" />}
+                </div>
             </motion.li>
         ))}
     </ol>
@@ -139,13 +167,14 @@ const ExperiencePanel = () => {
             })}
 
             <section>
-                <GroupLabel>Other Involvement</GroupLabel>
+                <GroupLabel>Other Leadership & Involvement</GroupLabel>
                 <ul className="divide-y divide-line border-y border-line">
                     {otherInvolvement.map((item) => (
                         <li key={`${item.org}-${item.role}`} className="py-3 grid md:grid-cols-[minmax(0,16rem)_1fr] gap-x-6 gap-y-0.5">
                             <p className="text-sm">
                                 <span className="font-semibold text-ink">{item.role}</span>
                                 <span className="text-muted"> · {item.org}</span>
+                                {item.period && <span className="block font-mono text-xs text-muted mt-0.5">{item.period}</span>}
                             </p>
                             <p className="text-sm text-muted">{item.note}</p>
                         </li>
@@ -172,9 +201,10 @@ export const About = () => {
 
                 <RevealOnScroll>
                     <p className="text-muted text-lg leading-relaxed max-w-3xl mx-auto mb-14 text-center">
-                        I build software that serves real communities — from leading technology at GDG NUS to shipping
-                        websites for nonprofits. Alongside engineering, I teach digital and AI ethics at NUS, because
-                        explaining ideas clearly and taking ownership matter as much as writing good code.
+                        I grew up in Surabaya and came to Singapore to study Computer Science at NUS, with a minor in
+                        Quantitative Finance. What keeps me going is figuring out how a system works, then building something
+                        useful with it. These days that means shipping production code, leading the developers around me,
+                        and teaching AI ethics, where explaining an idea clearly matters as much as getting it right.
                     </p>
                 </RevealOnScroll>
 

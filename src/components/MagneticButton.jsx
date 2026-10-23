@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 // Link that drifts slightly toward the cursor while hovered
-export const MagneticButton = ({ href, children, className = "", strength = 0.3 }) => {
+export const MagneticButton = ({ href, children, className = "", strength = 0.3, ...rest }) => {
     const ref = useRef(null);
     const x = useSpring(useMotionValue(0), { stiffness: 250, damping: 18 });
     const y = useSpring(useMotionValue(0), { stiffness: 250, damping: 18 });
@@ -22,6 +22,7 @@ export const MagneticButton = ({ href, children, className = "", strength = 0.3 
         <motion.a
             ref={ref}
             href={href}
+            {...rest}
             style={{ x, y }}
             onMouseMove={handleMove}
             onMouseLeave={reset}

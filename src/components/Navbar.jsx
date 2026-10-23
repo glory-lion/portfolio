@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { navLinks } from "../data";
+import { navLinks, resumeUrl } from "../data";
 
 const SunIcon = () => (
     <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -72,7 +72,15 @@ export const Navbar = ({ menuOpen, setMenuOpen, active, theme, toggleTheme }) =>
                                 {label}
                             </a>
                         ))}
-                        <div className="ml-3">
+                        <a
+                            href={resumeUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="ml-2 px-4 py-2 text-sm font-medium rounded-full border border-line text-ink hover:border-accent hover:text-accent-ink transition-colors"
+                        >
+                            Resume ↗
+                        </a>
+                        <div className="ml-2">
                             <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
                         </div>
                     </div>

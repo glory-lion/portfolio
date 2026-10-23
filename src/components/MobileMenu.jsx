@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { navLinks } from "../data";
+import { navLinks, resumeUrl } from "../data";
 
 export const MobileMenu = ({ menuOpen, setMenuOpen, active }) => {
   return (
@@ -24,6 +24,18 @@ export const MobileMenu = ({ menuOpen, setMenuOpen, active }) => {
               {label}
             </motion.a>
           ))}
+          <motion.a
+            href={resumeUrl}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setMenuOpen(false)}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0, transition: { delay: 0.05 * navLinks.length } }}
+            exit={{ opacity: 0, y: 10 }}
+            className="mt-6 px-6 py-2.5 rounded-full border border-accent text-accent-ink font-medium"
+          >
+            Resume ↗
+          </motion.a>
         </motion.div>
       )}
     </AnimatePresence>

@@ -10,8 +10,9 @@ const currentRoles = experienceGroups.flatMap((g) => g.items).filter((r) => r.pe
 
 // simpleicons.org slugs for each skill shown in the cloud
 const iconSlugs = [
-    "typescript", "javascript", "go", "html5", "css", "react",
-    "tailwindcss", "vite", "git", "github", "vercel",
+    "python", "openjdk", "typescript", "javascript", "go", "php", "react", "nextdotjs",
+    "laravel", "fastapi", "nodedotjs", "tailwindcss", "postgresql", "supabase",
+    "githubactions", "git", "github", "vercel", "firebase",
 ];
 
 const Counter = ({ to }) => {
@@ -84,12 +85,13 @@ export const Skills = ({ theme }) => {
             content: (
                 <Tile label="Currently">
                     <p className="font-serif text-2xl md:text-3xl text-ink leading-snug mt-auto">
-                        Building websites & event platforms for <span className="italic text-accent-ink">GDG, PINUS & PPIS</span>.
+                        Leading tech at <span className="italic text-accent-ink">GDG NUS</span>, building for MKP,
+                        and teaching AI ethics at NUS.
                     </p>
                 </Tile>
             ),
         },
-        { id: "projects", content: <Tile label="Projects"><Stat value={projects.length} label="shipped & featured" /></Tile> },
+        { id: "projects", content: <Tile label="Projects"><Stat value={projects.length} label="engineering projects" /></Tile> },
         { id: "roles", content: <Tile label="Roles"><Stat value={currentRoles} label="current tech, teaching & leadership roles" /></Tile> },
     ];
 

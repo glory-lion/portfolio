@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { MagneticButton } from "../MagneticButton";
 import { Globe } from "../fx/Globe";
-import { roles } from "../../data";
+import { heroFacts, resumeUrl, roles } from "../../data";
 import photo from "../../assets/profile_final.jpg";
 
 // Types, pauses, then deletes each role in turn
@@ -68,43 +68,74 @@ export const Home = ({ theme }) => {
                         className="inline-flex items-center gap-3 mb-6 pl-1 pr-4 py-1 rounded-full bg-surface border border-line shadow-sm"
                     >
                         <img src={photo} alt="Glory Lion" className="w-9 h-9 rounded-full object-cover" />
-                        <span className="font-mono text-sm text-accent-ink min-w-[14ch] text-left">
-                            {role}<span className="animate-blink">▍</span>
-                        </span>
+                        <span className="font-mono text-xs sm:text-sm text-muted">CS @ NUS · Surabaya → Singapore</span>
                     </motion.div>
 
                     <motion.h1
                         custom={1} variants={fadeUp} initial="hidden" animate="show"
-                        className="font-serif text-5xl md:text-7xl font-semibold text-ink tracking-tight mb-6"
+                        className="font-serif text-5xl md:text-7xl font-semibold text-ink tracking-tight mb-4"
                         style={{ lineHeight: 1.05 }}
                     >
                         Hi, I'm <span className="italic text-accent-ink">Glory Lion</span>.
                     </motion.h1>
 
+                    {/* Decorative only — the paragraph below carries the same message for screen readers */}
+                    <motion.p
+                        custom={1.5} variants={fadeUp} initial="hidden" animate="show"
+                        aria-hidden
+                        className="font-mono text-base md:text-lg text-ink mb-6"
+                    >
+                        <span className="text-muted">~/</span>
+                        <span className="text-accent-ink">{role}</span>
+                        <span className="animate-blink text-accent">▍</span>
+                    </motion.p>
+
                     <motion.p
                         custom={2} variants={fadeUp} initial="hidden" animate="show"
-                        className="text-muted text-lg mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed"
+                        className="text-muted text-lg mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed"
                     >
-                        I’m a self-taught website designer from Surabaya, Indonesia, currently pursuing a degree in Computer
-                        Science at the <span className="text-ink font-medium">National University of Singapore (NUS)</span>.
-                        For me, it’s not just about writing code, it’s about creating meaningful experiences.
+                        I’m a <span className="text-ink font-medium">software engineer</span> studying Computer Science
+                        at NUS, and I like turning difficult problems into software that actually works. I’ve architected a
+                        recruitment platform end to end as an intern, I lead technology at GDG NUS, and I once spent a
+                        hackathon teaching a model to tell AI-generated images from real ones. Mostly, I can’t leave a
+                        system alone until I understand how it works.
                     </motion.p>
+
+                    <motion.ul
+                        custom={2.5} variants={fadeUp} initial="hidden" animate="show"
+                        className="grid grid-cols-2 gap-x-6 gap-y-3 mb-10 max-w-lg mx-auto lg:mx-0 text-left"
+                    >
+                        {heroFacts.map((fact) => (
+                            <li key={fact.label} className="border-l-2 border-accent pl-3">
+                                <p className="text-sm font-semibold text-ink leading-tight">{fact.label}</p>
+                                <p className="text-xs text-muted">{fact.detail}</p>
+                            </li>
+                        ))}
+                    </motion.ul>
 
                     <motion.div
                         custom={3} variants={fadeUp} initial="hidden" animate="show"
-                        className="flex flex-wrap justify-center lg:justify-start gap-4"
+                        className="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4"
                     >
                         <MagneticButton
                             href="#projects"
-                            className="bg-primary text-on-primary py-3 px-8 rounded-full font-medium shadow-lg shadow-primary/20 hover:shadow-xl transition-shadow"
+                            className="bg-primary text-on-primary py-3 px-7 rounded-full font-medium shadow-lg shadow-primary/20 hover:shadow-xl transition-shadow"
                         >
-                            View Projects
+                            See my work
+                        </MagneticButton>
+                        <MagneticButton
+                            href={resumeUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="border border-ink/25 text-ink py-3 px-7 rounded-full font-medium hover:border-accent hover:text-accent-ink transition-colors"
+                        >
+                            Resume ↗
                         </MagneticButton>
                         <MagneticButton
                             href="#contact"
-                            className="border border-ink/25 text-ink py-3 px-8 rounded-full font-medium hover:border-accent hover:text-accent-ink transition-colors"
+                            className="text-ink py-3 px-4 font-medium underline decoration-accent/50 underline-offset-4 hover:text-accent-ink transition-colors"
                         >
-                            Contact Me
+                            Say hello
                         </MagneticButton>
                     </motion.div>
                 </div>
@@ -114,7 +145,7 @@ export const Home = ({ theme }) => {
                     initial={{ opacity: 0, scale: 0.85 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-                    className="relative order-1 lg:order-2 w-full max-w-[340px] sm:max-w-[440px] lg:max-w-[560px] mx-auto"
+                    className="relative order-1 lg:order-2 w-full max-w-[280px] sm:max-w-[440px] lg:max-w-[560px] mx-auto"
                 >
                     <div aria-hidden className="absolute inset-[12%] rounded-full bg-accent/20 blur-[80px]" />
                     <Globe theme={theme} />
