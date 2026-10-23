@@ -1,4 +1,4 @@
-import{r as D,j as Pe}from"./index-Dh6zyrH-.js";const se={low:{sim:64,dye:512,iterations:10},medium:{sim:96,dye:1024,iterations:16},high:{sim:128,dye:1440,iterations:20}},Xe=256,at=4,ue=.3,st=.7,ut="pointer-events-none fixed inset-0 data-[contained]:absolute",ct="block h-full w-full",lt=`#version 300 es
+import{r as D,j as Pe}from"./index-7N7quVu3.js";const se={low:{sim:64,dye:512,iterations:10},medium:{sim:96,dye:1024,iterations:16},high:{sim:128,dye:1440,iterations:20}},Xe=256,at=4,ue=.3,st=.7,ut="pointer-events-none fixed inset-0 data-[contained]:absolute",ct="block h-full w-full",lt=`#version 300 es
 precision highp float;
 in vec2 aPosition;
 uniform vec2 texelSize;
