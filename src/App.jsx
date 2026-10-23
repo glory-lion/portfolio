@@ -46,9 +46,10 @@ function App() {
               key={theme}
               theme={theme}
               // Light mode mixes like paint, so stay in one hue family to avoid muddy blends
-              colors={theme === "dark" ? ["#d4b13f", "#e6c866"] : ["#2f6b4f", "#4e8a66"]}
+              colors={theme === "dark" ? ["#d4b13f", "#e6c866"] : ["#c9a227", "#d9b850"]}
               rainbow={false}
-              intensity={0.55}
+              // gold is lighter than the old green, so light mode needs less to stay a soft glow
+              intensity={theme === "dark" ? 0.55 : 0.45}
               size={0.8}
               zIndex={0}
             />
