@@ -2,6 +2,7 @@ import universeImg from "./assets/universe_project.png";
 import topicNestImg from "./assets/topicnest_project.png";
 import moduleQuestImg from "./assets/modulequest_project.jpg";
 import ppisImg from "./assets/ppis_project.jpg";
+import mosaicImg from "./assets/mosaic_project.jpg";
 
 export const navLinks = [
   { id: "home", label: "Home" },
@@ -196,6 +197,23 @@ export const projects = [
     live: "https://module-quest.vercel.app",
   },
   {
+    id: "mosaic",
+    title: "Mosaic",
+    badge: "TikTok TechJam 2026 · Team project",
+    image: mosaicImg,
+    description:
+      "AI-generated images rarely stay pristine once shared — they get compressed, cropped, and recoloured. Mosaic detects them anyway, and flags when near-identical AI images are flooding a feed. My part was the detector: a CLIP ViT-L/14 backbone with an MLP classification head, pushed to 80.5% accuracy through data augmentation and partial-backbone fine-tuning.",
+    points: [
+      "Tracked down why uploads were always labelled “original”: the live model was disabled, so every image fell through to a filename heuristic",
+      "Fixed key training and evaluation bugs, and served the model through a FastAPI + React app for real-time detection",
+      "The same CLIP embeddings drive a cosine-similarity repetition score, so near-duplicates are caught without a second model",
+    ],
+    tech: ["Python", "CLIP ViT-L/14", "FastAPI", "React", "TypeScript"],
+    repo: "https://github.com/evannathanael/mosaic",
+    live: "https://devpost.com/software/mosaic-orgz2j",
+    liveLabel: "Devpost",
+  },
+  {
     id: "ppis-cicd",
     title: "PPI Singapura — CI/CD",
     badge: "Team project · I owned CI/CD",
@@ -227,21 +245,5 @@ export const projects = [
     tech: ["TypeScript", "PostgreSQL", "REST API", "MediaPipe"],
     repo: "https://github.com/JovianSanjaya/hacknroll2026.git",
     live: "https://hacknroll2026-ochre.vercel.app/",
-  },
-  {
-    id: "aigc-detection",
-    title: "AIGC Detection Platform",
-    role: "TikTok TechJam 2026",
-    description:
-      "An AI-generated image detector built on CLIP ViT-L/14 embeddings with an MLP classification head. Data augmentation and partial-backbone fine-tuning took it to 80.5% accuracy; I also fixed key training and evaluation bugs and served the model through a FastAPI + React app for real-time detection.",
-    tech: ["Python", "CLIP", "FastAPI", "React"],
-  },
-  {
-    id: "ict-exam",
-    title: "High School ICT Final Exam",
-    role: "Coordinator of Tech Division",
-    description:
-      "Designed and coordinated a website to display students’ projects and assignments for the High School Final Exam, improving accessibility and organization for both students and teachers.",
-    tech: ["HTML", "CSS", "JavaScript"],
   },
 ];

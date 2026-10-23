@@ -22,7 +22,7 @@ const Points = ({ points }) => (
 );
 
 const GroupLabel = ({ children }) => (
-    <h3 className="font-mono text-xs uppercase tracking-[0.25em] text-accent-ink mb-6">{children}</h3>
+    <h3 className="font-serif italic text-lg text-accent-ink mb-6">{children}</h3>
 );
 
 const Timeline = ({ items }) => (
@@ -80,7 +80,7 @@ const RoleTimeline = ({ items, offset = 0 }) => (
                     }
                 >
                     {item.featured && (
-                        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent-ink mb-2">★ Highlight</p>
+                        <p className="font-serif italic text-sm text-accent-ink mb-1">★ Highlight</p>
                     )}
                     <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                         <h4
@@ -197,7 +197,7 @@ export const About = () => {
     return (
         <section id="about" className="py-24 md:py-32 px-6">
             <div className="max-w-4xl mx-auto">
-                <SectionHeading eyebrow="01 · About" title="A bit about me" />
+                <SectionHeading eyebrow="01 — About" title="A bit about me" />
 
                 <RevealOnScroll>
                     <p className="text-muted text-lg leading-relaxed max-w-3xl mx-auto mb-14 text-center">

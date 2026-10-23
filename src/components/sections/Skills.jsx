@@ -14,7 +14,7 @@ const iconSlugs = [
 
 const Tile = ({ label, children }) => (
     <div className="flex flex-col h-full">
-        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent-ink mb-4">{label}</p>
+        <p className="font-serif italic text-base text-accent-ink mb-4">{label}</p>
         {children}
     </div>
 );
@@ -70,7 +70,7 @@ export const Skills = ({ theme }) => {
     return (
         <section id="skills" className="py-24 md:py-32 px-6 bg-surface-2/50">
             <div className="max-w-6xl mx-auto">
-                <SectionHeading eyebrow="02 · Skills" title="Tools of the trade" />
+                <SectionHeading eyebrow="02 — Skills" title="Tools of the trade" />
                 <RevealOnScroll>
                     <MagicBento
                         items={items}

@@ -64,7 +64,7 @@ export const Contact = () => {
 
     return <section id="contact" className="py-24 md:py-32 px-6 bg-surface-2/50">
         <div className="max-w-2xl mx-auto">
-            <SectionHeading eyebrow="04 · Contact" title="Let's work together" />
+            <SectionHeading eyebrow="04 — Contact" title="Let's work together" />
 
             <RevealOnScroll>
                 <div className="p-8 md:p-10 bg-surface rounded-3xl shadow-sm border border-line">
