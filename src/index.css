@@ -1,22 +1,74 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Forest green & ivory palette — swapped wholesale in dark mode */
+:root {
+  --bg: #f8f5ec;
+  --surface: #ffffff;
+  --surface-2: #ece7d8;
+  --ink: #1f3b2d;
+  --muted: #5e6b5f;
+  --accent: #c9a227;
+  --accent-ink: #8a6d12;
+  --primary: #1f3b2d;
+  --on-primary: #f8f5ec;
+  --line: rgb(31 59 45 / 0.12);
+}
+
+.dark {
+  --bg: #0f1a14;
+  --surface: #16241c;
+  --surface-2: #1f3328;
+  --ink: #ece7d8;
+  --muted: #a3ae9f;
+  --accent: #d4b13f;
+  --accent-ink: #d4b13f;
+  --primary: #d4b13f;
+  --on-primary: #0f1a14;
+  --line: rgb(236 231 216 / 0.12);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-line: var(--line);
+
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+}
+
 html, body {
   margin: 0;
   padding: 0;
-  font-family: "Space Grotest", sans-serif;
-  background: #fffef9;
-  color: black;
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--ink);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background: var(--accent);
+  color: #1f3b2d;
 }
 
 @layer utilities {
-
   @keyframes blink {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
   }
 
   .animate-blink {
@@ -24,26 +76,51 @@ html, body {
   }
 
   @keyframes loading {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(250%);
-    }
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(250%); }
   }
 
   .animate-loading-bar {
-    animation: loading 0.8s ease infinite; 
+    animation: loading 0.8s ease infinite;
+  }
+
+  /* Subtle paper grain over the page background */
+  .grain {
+    background-image: radial-gradient(var(--line) 1px, transparent 1px);
+    background-size: 22px 22px;
   }
 }
 
-.reveal {
-  opacity : 0;
-  transform: translateY(20px);
-  transition : opacity 0.7s ease, transform 0.7s ease;
+/* City labels pinned to globe markers via CSS anchor positioning.
+   Hidden in browsers without anchor support rather than misplaced. */
+.globe-label {
+  display: none;
 }
 
-.reveal.visible {
-  opacity : 1;
-  transform: translateY(0);
+@supports (position-anchor: --a) {
+  .globe-label {
+    display: block;
+    position: absolute;
+    bottom: anchor(top);
+    left: anchor(center);
+    translate: -50% -10px;
+    white-space: nowrap;
+    pointer-events: none;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+    background: color-mix(in srgb, var(--surface) 85%, transparent);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 14px rgb(0 0 0 / 0.08);
+    opacity: var(--visible);
+    filter: blur(calc((1 - var(--visible)) * 6px));
+    transition: opacity 0.4s, filter 0.4s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }

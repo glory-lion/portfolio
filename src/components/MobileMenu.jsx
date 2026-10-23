@@ -1,39 +1,31 @@
-import {useEffect} from "react";
-export const MobileMenu = ({ menuOpen, setMenuOpen }) => {
-  return (
-    <div
-      className={`fixed top-0 left-0 w-full bg-[#FBF5DD] z-40 flex flex-col items-center justify-center transition-all duration-300 ease-in-out 
-        ${menuOpen ? "h-screen opacity-100 pointer-events-auto" : "h-0 opacity-0 pointer-events-none"}`}
-    >
-      <button
-        onClick={() => setMenuOpen(false)}
-        className="absolute top-6 right-6 text-amber-900 text-3xl focus:outline-none cursor-pointer"
-        aria-label="Close Menu"
-      >
-        &times;
-      </button>
+import { AnimatePresence, motion } from "framer-motion";
+import { navLinks } from "../data";
 
-      <a href="#home" onClick={() => setMenuOpen(false)} 
-        className={`text-2xl font-semibold text-amber-800 my-4 transform transition-transform duration-300
-                    ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
-            `}>
-        Home
-      </a>
-      <a href="#about" onClick={() => setMenuOpen(false)} className={`text-2xl font-semibold text-amber-800 my-4 transform transition-transform duration-300
-                    ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
-            `}>
-        About
-      </a>
-      <a href="#projects" onClick={() => setMenuOpen(false)} className={`text-2xl font-semibold text-amber-800 my-4 transform transition-transform duration-300
-                    ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
-            `}>
-        Projects
-      </a>
-      <a href="#contact" onClick={() => setMenuOpen(false)} className={`text-2xl font-semibold text-amber-800 my-4 transform transition-transform duration-300
-                    ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
-            `}>
-        Contact
-      </a>
-    </div>
+export const MobileMenu = ({ menuOpen, setMenuOpen, active }) => {
+  return (
+    <AnimatePresence>
+      {menuOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-bg/95 backdrop-blur-lg z-30 flex flex-col items-center justify-center md:hidden"
+        >
+          {navLinks.map(({ id, label }, i) => (
+            <motion.a
+              key={id}
+              href={`#${id}`}
+              onClick={() => setMenuOpen(false)}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0, transition: { delay: 0.05 * i } }}
+              exit={{ opacity: 0, y: 10 }}
+              className={`font-serif text-4xl my-3 ${active === id ? "text-accent-ink" : "text-ink"}`}
+            >
+              {label}
+            </motion.a>
+          ))}
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };

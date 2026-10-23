@@ -1,89 +1,95 @@
+import { motion } from "framer-motion";
+import { SectionHeading } from "../SectionHeading";
 import { RevealOnScroll } from "../RevealOnScroll";
+import { ContainerScroll } from "../fx/ContainerScroll";
+import { projects } from "../../data";
 
-import universeImg from "../../assets/universe_project.png";
-import topicNestImg from "../../assets/topicnest_project.png";
+const TechTags = ({ tech }) => (
+    <div className="flex flex-wrap gap-2">
+        {tech.map((t) => (
+            <span key={t} className="font-mono text-xs bg-surface-2 text-ink py-1 px-3 rounded-full">
+                {t}
+            </span>
+        ))}
+    </div>
+);
+
+const ProjectLinks = ({ project }) => (
+    <div className="flex gap-3">
+        {project.repo && (
+            <a href={project.repo} target="_blank" rel="noreferrer"
+                className="px-5 py-2.5 rounded-full border border-ink/20 text-sm font-semibold text-ink hover:border-accent hover:text-accent-ink transition-colors">
+                Repository ↗
+            </a>
+        )}
+        {project.live && (
+            <a href={project.live} target="_blank" rel="noreferrer"
+                className="px-5 py-2.5 rounded-full bg-primary text-on-primary text-sm font-semibold hover:shadow-lg transition-shadow">
+                Live site ↗
+            </a>
+        )}
+    </div>
+);
+
+const ShowcaseHeader = ({ project, index }) => (
+    <div className="grid md:grid-cols-[1fr_auto] gap-6 items-end">
+        <div>
+            <p className="font-mono text-xs text-accent-ink mb-3">
+                {String(index + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+            </p>
+            <h3 className="font-serif text-4xl md:text-6xl font-semibold text-ink tracking-tight mb-4">{project.title}</h3>
+            <p className="text-muted text-lg leading-relaxed max-w-2xl mb-5">{project.description}</p>
+            <TechTags tech={project.tech} />
+        </div>
+        <ProjectLinks project={project} />
+    </div>
+);
 
 export const Projects = () => {
+    const showcased = projects.filter((p) => p.image);
+    const others = projects.filter((p) => !p.image);
+
     return (
-        <section
-            id="projects"
-            className="min-h-screen flex items-center justify-center py-20"
-        >
-            <RevealOnScroll>
-                <div className="max-w-5xl mx-auto px-4">
-                    <h2 className="text-4xl font-bold bg-gradient-to-r from-amber-600 via-orange-500 to-amber-800 bg-clip-text text-transparent mb-12 text-center">
-                        Featured Projects
-                    </h2>
+        <section id="projects" className="py-24 md:py-32 px-6 overflow-x-clip">
+            <div className="max-w-6xl mx-auto">
+                <SectionHeading eyebrow="03 · Work" title="Featured projects" />
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {/* TopicNest */}
-                        <div className="p-8 rounded-3xl bg-white/80 backdrop-blur-md border border-amber-900/10 hover:-translate-y-2 hover:shadow-2xl transition-all shadow-lg flex flex-col h-full">
-                            <img src={topicNestImg} alt="TopicNest" className="w-full h-64 object-cover object-top rounded-2xl mb-6 shadow-sm" />
-                            <h3 className="text-2xl font-bold mb-3 text-amber-900">TopicNest</h3>
-                            <p className="text-stone-600 mb-6 leading-relaxed">
-                                TopicNest is a modern, high performance community forum which features a sleek, responsive interface for real time discussions, user profiles, and category based post management.
-                            </p>
-                            <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-                                {["TypeScript", "Go", "CSS"].map((tech, key) => (
-                                    <span
-                                        key={key}
-                                        className="bg-[#F3E8E2] text-[#4A3B32] py-1 px-4 rounded-full text-sm font-medium hover:bg-[#E5D5C6] transition"
-                                    >
-                                        {tech}
-                                    </span>
-                                ))}
-                            </div>
-                            <div className="flex justify-between items-center">
-                                <a href="https://github.com/glory-lion/topicnest.git" className="text-amber-700 hover:text-amber-600 font-bold transition-colors"> Repository → </a>
-                                <a href="https://topicnest-self.vercel.app/forum" className="text-amber-700 hover:text-amber-600 font-bold transition-colors"> Website → </a>
+                {showcased.map((project, i) => (
+                    <ContainerScroll key={project.id} header={<ShowcaseHeader project={project} index={i} />}>
+                        <motion.img
+                            src={project.image}
+                            alt={`${project.title} screenshot`}
+                            className="w-full h-full object-cover object-top"
+                            whileHover={{ scale: 1.03 }}
+                            transition={{ duration: 0.6 }}
+                            draggable={false}
+                        />
+                    </ContainerScroll>
+                ))}
+
+                {others.map((project) => (
+                    <RevealOnScroll key={project.id} className="max-w-5xl mx-auto mt-16">
+                        <div className="relative overflow-hidden rounded-3xl bg-primary text-on-primary p-8 md:p-12">
+                            <div className="absolute inset-0 grain opacity-20 pointer-events-none" />
+                            <span aria-hidden className="absolute -right-6 -bottom-10 font-serif italic text-[10rem] leading-none text-accent/20 select-none">
+                                &lt;/&gt;
+                            </span>
+                            <div className="relative max-w-2xl">
+                                {project.role && <p className="font-mono text-xs text-accent mb-3">{project.role}</p>}
+                                <h3 className="font-serif text-3xl md:text-4xl font-semibold mb-4">{project.title}</h3>
+                                <p className="opacity-80 leading-relaxed mb-6">{project.description}</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {project.tech.map((t) => (
+                                        <span key={t} className="font-mono text-xs border border-current/25 py-1 px-3 rounded-full">
+                                            {t}
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
                         </div>
-
-                        {/* UniVerse */}
-                        <div className="p-8 rounded-3xl bg-white/80 backdrop-blur-md border border-amber-900/10 hover:-translate-y-2 hover:shadow-2xl transition-all shadow-lg flex flex-col h-full">
-                            <img src={universeImg} alt="Universe Project" className="w-full h-64 object-cover object-top rounded-2xl mb-6 shadow-sm" />
-                            <h3 className="text-2xl font-bold mb-3 text-amber-900">UniVerse</h3>
-                            <p className="text-stone-600 mb-6 leading-relaxed">
-                                Choosing a university shouldn’t feel like solving a puzzle with missing pieces. UniVerse makes discovering universities clear, personalized, and enjoyable.
-                            </p>
-                            <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-                                {["TypeScript", "JavaScript", "CSS", "HTML"].map((tech, key) => (
-                                    <span
-                                        key={key}
-                                        className="bg-[#F3E8E2] text-[#4A3B32] py-1 px-4 rounded-full text-sm font-medium hover:bg-[#E5D5C6] transition"
-                                    >
-                                        {tech}
-                                    </span>
-                                ))}
-                            </div>
-                            <div className="flex justify-between items-center">
-                                <a href="https://github.com/JovianSanjaya/hacknroll2026.git" className="text-amber-700 hover:text-amber-600 font-bold transition-colors"> Repository → </a>
-                                <a href="https://hacknroll2026-ochre.vercel.app/" className="text-amber-700 hover:text-amber-600 font-bold transition-colors"> Website → </a>
-                            </div>
-                        </div>
-
-                        {/* Coordinator Project */}
-                        <div className="p-8 rounded-3xl bg-white/80 backdrop-blur-md border border-amber-900/10 hover:-translate-y-2 hover:shadow-2xl transition-all shadow-lg flex flex-col h-full">
-                            <h3 className="text-xl font-bold mb-3 text-amber-900">Coordinator of Tech Division - High School ICT Final Exam</h3>
-                            <p className="text-stone-600 mb-6 leading-relaxed">
-                                Designed and coordinated a website to display students’ projects and assignments for the High School Final Exam,
-                                improving accessibility and organization for both students and teachers.
-                            </p>
-
-                            <div className="flex flex-wrap gap-2 mt-auto">
-                                {["HTML", "CSS", "JavaScript"].map((tech, key) => (
-                                    <span
-                                        key={key}
-                                        className="bg-[#F3E8E2] text-[#4A3B32] py-1 px-4 rounded-full text-sm font-medium hover:bg-[#E5D5C6] transition"
-                                    >
-                                        {tech}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </RevealOnScroll>
+                    </RevealOnScroll>
+                ))}
+            </div>
         </section>
     );
 };

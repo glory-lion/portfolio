@@ -1,68 +1,142 @@
-
-import { RevealOnScroll } from "../RevealOnScroll";
+import { useEffect, useState } from "react";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { MagneticButton } from "../MagneticButton";
+import { Globe } from "../fx/Globe";
+import { roles } from "../../data";
 import photo from "../../assets/profile_final.jpg";
 
-export const Home = () => {
+// Types, pauses, then deletes each role in turn
+const useTypewriter = (words, { typeMs = 70, deleteMs = 40, holdMs = 1600 } = {}) => {
+    const [wordIndex, setWordIndex] = useState(0);
+    const [text, setText] = useState("");
+    const [deleting, setDeleting] = useState(false);
+
+    useEffect(() => {
+        const word = words[wordIndex];
+
+        if (!deleting && text === word) {
+            const t = setTimeout(() => setDeleting(true), holdMs);
+            return () => clearTimeout(t);
+        }
+        if (deleting && text === "") {
+            setDeleting(false);
+            setWordIndex((i) => (i + 1) % words.length);
+            return;
+        }
+
+        const t = setTimeout(
+            () => setText(deleting ? word.slice(0, text.length - 1) : word.slice(0, text.length + 1)),
+            deleting ? deleteMs : typeMs
+        );
+        return () => clearTimeout(t);
+    }, [text, deleting, wordIndex, words, typeMs, deleteMs, holdMs]);
+
+    return text;
+};
+
+const fadeUp = {
+    hidden: { opacity: 0, y: 24 },
+    show: (i) => ({ opacity: 1, y: 0, transition: { delay: 0.15 * i, duration: 0.7, ease: [0.22, 1, 0.36, 1] } }),
+};
+
+export const Home = ({ theme }) => {
+    const role = useTypewriter(roles);
+    const mouseX = useMotionValue(-1000);
+    const mouseY = useMotionValue(-1000);
+    const spotlight = useMotionTemplate`radial-gradient(500px circle at ${mouseX}px ${mouseY}px, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%)`;
+
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        mouseX.set(e.clientX - rect.left);
+        mouseY.set(e.clientY - rect.top);
+    };
+
     return (
         <section
             id="home"
-            className="min-h-screen flex items-center justify-center relative bg-[#FFFDF9] px-6 md:px-20"
+            onMouseMove={handleMouseMove}
+            className="min-h-screen flex items-center justify-center relative overflow-hidden px-6 md:px-12 pt-24 pb-16"
         >
-            <RevealOnScroll>
-                <div className="flex flex-col md:flex-row items-center relative z-10">
-                    {/* --- Left: Profile Image --- */}
-                    <div className="md:w-1/3 flex justify-center md:justify-end mb-10 md:mb-0 relative">
-                        {/* Glow Effect */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-amber-500/20 blur-[90px] rounded-full -z-10"></div>
+            <div className="absolute inset-0 grain opacity-60 pointer-events-none" />
+            <motion.div className="absolute inset-0 pointer-events-none" style={{ background: spotlight }} />
 
-                        <img
-                            src={photo}
-                            alt="Glory Lion"
-                            className="w-52 h-52 md:w-64 md:h-64 object-cover object-center rounded-full shadow-2xl border-4 border-amber-900/10 relative z-10"
-                        />
-                    </div>
+            <div className="max-w-6xl w-full mx-auto grid lg:grid-cols-[1.1fr_1fr] items-center gap-6 lg:gap-4 relative z-10">
+                {/* --- Text --- */}
+                <div className="text-center lg:text-left order-2 lg:order-1">
+                    <motion.div
+                        custom={0} variants={fadeUp} initial="hidden" animate="show"
+                        className="inline-flex items-center gap-3 mb-6 pl-1 pr-4 py-1 rounded-full bg-surface border border-line shadow-sm"
+                    >
+                        <img src={photo} alt="Glory Lion" className="w-9 h-9 rounded-full object-cover" />
+                        <span className="font-mono text-sm text-accent-ink min-w-[14ch] text-left">
+                            {role}<span className="animate-blink">▍</span>
+                        </span>
+                    </motion.div>
 
-                    {/* --- Right: Text Content --- */}
-                    <div className="text-center md:text-left z-10 px-4 md:w-3/4 md:pl-16">
-                        <h1
-                            className="text-4xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-amber-600 via-orange-500 to-amber-800 bg-clip-text text-transparent 
-                        md:whitespace-nowrap tracking-tight"
-                            style={{ lineHeight: "1.1" }}
+                    <motion.h1
+                        custom={1} variants={fadeUp} initial="hidden" animate="show"
+                        className="font-serif text-5xl md:text-7xl font-semibold text-ink tracking-tight mb-6"
+                        style={{ lineHeight: 1.05 }}
+                    >
+                        Hi, I'm <span className="italic text-accent-ink">Glory Lion</span>.
+                    </motion.h1>
+
+                    <motion.p
+                        custom={2} variants={fadeUp} initial="hidden" animate="show"
+                        className="text-muted text-lg mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed"
+                    >
+                        I’m a self-taught website designer from Surabaya, Indonesia, currently pursuing a degree in Computer
+                        Science at the <span className="text-ink font-medium">National University of Singapore (NUS)</span>.
+                        For me, it’s not just about writing code, it’s about creating meaningful experiences.
+                    </motion.p>
+
+                    <motion.div
+                        custom={3} variants={fadeUp} initial="hidden" animate="show"
+                        className="flex flex-wrap justify-center lg:justify-start gap-4"
+                    >
+                        <MagneticButton
+                            href="#projects"
+                            className="bg-primary text-on-primary py-3 px-8 rounded-full font-medium shadow-lg shadow-primary/20 hover:shadow-xl transition-shadow"
                         >
-                            Hi, I'm Glory Lion!
-                        </h1>
-
-                        <p className="text-stone-600 text-lg mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
-                            I’m a self-taught website designer based in Indonesia, currently
-                            pursuing a degree in Computer Science at the <span className="text-amber-700 font-medium">National University of Singapore (NUS)</span>.
-                            For me, it’s not just about writing code, it’s about creating meaningful experiences.
-                        </p>
-
-                        {/* --- Buttons --- */}
-                        <div className="flex justify-center md:justify-start space-x-4">
-                            <a
-                                href="#projects"
-                                className="bg-amber-900 text-amber-50 py-3 px-8 rounded-full font-medium transition-all duration-300 
-                            hover:bg-amber-800 hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-900/20"
-                            >
-                                View Projects
-                            </a>
-
-                            <a
-                                href="#contact"
-                                className="border border-amber-900/30 text-amber-900 py-3 px-8 rounded-full font-medium transition-all
-                            duration-300 hover:bg-amber-50 hover:-translate-y-1 hover:border-amber-900/60"
-                            >
-                                Contact Me
-                            </a>
-                        </div>
-                    </div>
+                            View Projects
+                        </MagneticButton>
+                        <MagneticButton
+                            href="#contact"
+                            className="border border-ink/25 text-ink py-3 px-8 rounded-full font-medium hover:border-accent hover:text-accent-ink transition-colors"
+                        >
+                            Contact Me
+                        </MagneticButton>
+                    </motion.div>
                 </div>
-            </RevealOnScroll>
 
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
-                <span className="text-amber-900 text-2xl">↓</span>
+                {/* --- Globe: Surabaya → Singapore --- */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.85 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+                    className="relative order-1 lg:order-2 w-full max-w-[340px] sm:max-w-[440px] lg:max-w-[560px] mx-auto"
+                >
+                    <div aria-hidden className="absolute inset-[12%] rounded-full bg-accent/20 blur-[80px]" />
+                    <Globe theme={theme} />
+                    <p className="absolute -bottom-2 left-1/2 -translate-x-1/2 font-mono text-[11px] text-muted whitespace-nowrap">
+                        Surabaya → Singapore · drag to spin
+                    </p>
+                </motion.div>
             </div>
-        </section >
+
+            <motion.a
+                href="#about"
+                aria-label="Scroll to About"
+                className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 w-6 h-10 rounded-full border-2 border-ink/30 justify-center pt-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { delay: 1 } }}
+            >
+                <motion.span
+                    className="w-1 h-2 rounded-full bg-accent"
+                    animate={{ y: [0, 12, 0] }}
+                    transition={{ duration: 1.6, repeat: Infinity }}
+                />
+            </motion.a>
+        </section>
     );
 };

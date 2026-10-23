@@ -14,7 +14,9 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.14",
+    "cobe": "^2.0.1",
     "emailjs-com": "^3.2.0",
+    "framer-motion": "^12.43.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "tailwindcss": "^4.1.14"
