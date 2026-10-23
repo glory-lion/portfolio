@@ -31,6 +31,24 @@ const ProjectLinks = ({ project }) => (
     </div>
 );
 
+// CI/CD flow drawn as connected stages, so the delivery work reads at a glance
+const Pipeline = ({ steps, targets }) => (
+    <div className="mb-5 max-w-2xl">
+        <ol className="flex flex-wrap items-center gap-y-2 font-mono text-xs">
+            {steps.map((step, i) => (
+                <li key={step} className="flex items-center">
+                    <span className="flex items-center gap-1.5 py-1.5 px-3 rounded-full border border-accent/50 bg-accent/10 text-accent-ink">
+                        <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                        {step}
+                    </span>
+                    {i < steps.length - 1 && <span aria-hidden className="w-5 h-px bg-accent/60 mx-1" />}
+                </li>
+            ))}
+        </ol>
+        {targets && <p className="font-mono text-xs text-muted mt-2">GitHub Actions · runs for {targets}</p>}
+    </div>
+);
+
 const ShowcaseHeader = ({ project, index, total }) => (
     <div className="grid md:grid-cols-[1fr_auto] gap-6 items-end">
         <div>
@@ -50,6 +68,7 @@ const ShowcaseHeader = ({ project, index, total }) => (
                     ))}
                 </ul>
             )}
+            {project.pipeline && <Pipeline steps={project.pipeline} targets={project.pipelineTargets} />}
             <TechTags tech={project.tech} />
         </div>
         <ProjectLinks project={project} />
@@ -85,7 +104,7 @@ export const Projects = () => {
                 </RevealOnScroll>
                 <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6">
                     {others.map((project, i) => (
-                        <RevealOnScroll key={project.id} delay={0.05 * i} className={i === 0 ? "md:col-span-2" : ""}>
+                        <RevealOnScroll key={project.id} delay={0.05 * i} className="h-full">
                             <div className="relative h-full overflow-hidden rounded-3xl bg-primary text-on-primary p-8 md:p-10 flex flex-col">
                                 <div className="absolute inset-0 grain opacity-20 pointer-events-none" />
                                 <span aria-hidden className="absolute -right-6 -bottom-10 font-serif italic text-[10rem] leading-none text-accent/20 select-none">

@@ -1,12 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { animate, useInView } from "framer-motion";
+import { useMemo } from "react";
 import { SectionHeading } from "../SectionHeading";
 import { RevealOnScroll } from "../RevealOnScroll";
 import MagicBento from "../fx/MagicBento";
 import { IconCloud } from "../fx/IconCloud";
-import { experienceGroups, projects, skills } from "../../data";
-
-const currentRoles = experienceGroups.flatMap((g) => g.items).filter((r) => r.period?.endsWith("Present")).length;
+import { skills } from "../../data";
 
 // simpleicons.org slugs for each skill shown in the cloud
 const iconSlugs = [
@@ -14,20 +11,6 @@ const iconSlugs = [
     "laravel", "fastapi", "nodedotjs", "tailwindcss", "postgresql", "supabase",
     "githubactions", "git", "github", "vercel", "firebase",
 ];
-
-const Counter = ({ to }) => {
-    const ref = useRef(null);
-    const inView = useInView(ref, { once: true });
-    const [value, setValue] = useState(0);
-
-    useEffect(() => {
-        if (!inView) return;
-        const controls = animate(0, to, { duration: 1.6, ease: "easeOut", onUpdate: (v) => setValue(Math.round(v)) });
-        return () => controls.stop();
-    }, [inView, to]);
-
-    return <span ref={ref}>{value}</span>;
-};
 
 const Tile = ({ label, children }) => (
     <div className="flex flex-col h-full">
@@ -43,15 +26,6 @@ const Chips = ({ items }) => (
                 {skill}
             </span>
         ))}
-    </div>
-);
-
-const Stat = ({ value, label }) => (
-    <div className="mt-auto">
-        <p className="font-serif text-6xl font-semibold text-ink leading-none mb-2">
-            <Counter to={value} />
-        </p>
-        <p className="text-muted text-sm">{label}</p>
     </div>
 );
 
@@ -77,8 +51,8 @@ export const Skills = ({ theme }) => {
             ),
         },
         { id: "languages", colSpan: 2, content: <Tile label={languages.group}><Chips items={languages.items} /></Tile> },
-        { id: "frameworks", content: <Tile label={frameworks.group}><Chips items={frameworks.items} /></Tile> },
-        { id: "tools", content: <Tile label={tools.group}><Chips items={tools.items} /></Tile> },
+        { id: "frameworks", colSpan: 2, content: <Tile label={frameworks.group}><Chips items={frameworks.items} /></Tile> },
+        { id: "tools", colSpan: 2, content: <Tile label={tools.group}><Chips items={tools.items} /></Tile> },
         {
             id: "currently",
             colSpan: 2,
@@ -91,8 +65,6 @@ export const Skills = ({ theme }) => {
                 </Tile>
             ),
         },
-        { id: "projects", content: <Tile label="Projects"><Stat value={projects.length} label="engineering projects" /></Tile> },
-        { id: "roles", content: <Tile label="Roles"><Stat value={currentRoles} label="current tech, teaching & leadership roles" /></Tile> },
     ];
 
     return (

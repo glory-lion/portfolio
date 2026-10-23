@@ -1,6 +1,7 @@
 import universeImg from "./assets/universe_project.png";
 import topicNestImg from "./assets/topicnest_project.png";
 import moduleQuestImg from "./assets/modulequest_project.jpg";
+import ppisImg from "./assets/ppis_project.jpg";
 
 export const navLinks = [
   { id: "home", label: "Home" },
@@ -195,6 +196,18 @@ export const projects = [
     live: "https://module-quest.vercel.app",
   },
   {
+    id: "ppis-cicd",
+    title: "PPI Singapura — CI/CD",
+    badge: "Team project · I owned CI/CD",
+    image: ppisImg,
+    description:
+      "The official site of the Indonesian Students Association in Singapore, built by a team. I was selected by the team head to own delivery: every change to the backend, website, and dashboard now goes through GitHub Actions pipelines that test it and deploy it to Vercel. I also untangled the merge conflicts when separately built modules were integrated, and wired the frontends to the backend.",
+    pipeline: ["Push", "Automated tests", "Build", "Deploy to Vercel"],
+    pipelineTargets: "backend · website · dashboard",
+    tech: ["GitHub Actions", "Next.js", "Vercel", "Supabase", "Neon PostgreSQL"],
+    live: "https://www.ppisingapura.com/",
+  },
+  {
     id: "topicnest",
     title: "TopicNest",
     image: topicNestImg,
@@ -222,15 +235,6 @@ export const projects = [
     description:
       "An AI-generated image detector built on CLIP ViT-L/14 embeddings with an MLP classification head. Data augmentation and partial-backbone fine-tuning took it to 80.5% accuracy; I also fixed key training and evaluation bugs and served the model through a FastAPI + React app for real-time detection.",
     tech: ["Python", "CLIP", "FastAPI", "React"],
-  },
-  {
-    id: "ppis-cicd",
-    title: "PPIS Delivery Pipeline",
-    role: "Team project · my part: CI/CD & integration",
-    description:
-      "For the PPI Singapura website, I owned continuous delivery: GitHub Actions pipelines that test and deploy the backend, site, and dashboard, plus untangling the merge conflicts when separately built modules came together.",
-    tech: ["GitHub Actions", "Vercel", "Supabase", "Neon"],
-    live: "https://www.ppisingapura.com/",
   },
   {
     id: "ict-exam",

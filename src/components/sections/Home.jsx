@@ -68,7 +68,7 @@ export const Home = ({ theme }) => {
                         className="inline-flex items-center gap-3 mb-6 pl-1 pr-4 py-1 rounded-full bg-surface border border-line shadow-sm"
                     >
                         <img src={photo} alt="Glory Lion" className="w-9 h-9 rounded-full object-cover" />
-                        <span className="font-mono text-xs sm:text-sm text-muted">CS @ NUS · Surabaya → Singapore</span>
+                        <span className="font-mono text-xs sm:text-sm text-muted">Computer Science @ NUS</span>
                     </motion.div>
 
                     <motion.h1

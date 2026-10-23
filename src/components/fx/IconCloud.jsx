@@ -237,8 +237,9 @@ function IconCloud({
   return <div className="absolute inset-0">
       <canvas
     ref={canvasRef}
-    width={400}
-    height={400}
+    // sphere radius is fixed at 100, so a tighter canvas makes it fill the tile
+    width={260}
+    height={260}
     onMouseDown={handleMouseDown}
     onMouseMove={handleMouseMove}
     onMouseUp={handleMouseUp}
